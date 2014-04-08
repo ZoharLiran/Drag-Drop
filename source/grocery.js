@@ -13,18 +13,30 @@
  */
 
 $(document).ready(function(){
+  view = new SingleListApp.View();
+  list = new SingleListApp.List();
   controller = new SingleListApp.Controller();
   controller.bind();
+
 })
 
 
 SingleListApp.Controller.prototype = {
   bind: function(){bindNbuild()},
-  updateList: function(droppedItem, droppingSpot){ 
+  update: function(droppedItem){ 
     var v = droppedItem.draggable[0].cloneNode(true);
-    List.update(v)
-    parseFloat(v.children[1].innerHTML)
-    $(droppingSpot).append($(v));
+    item = new SingleListApp.Item(parseNode(v));
+    list.updateTotal(item);
+    view.renderList(v);
+    view.updateTotal(list.total)
+
+  }
+}
+
+parseNode = function(node){
+  return {
+    name: node.children[0].innerHTML, 
+    value: parseFloat(node.children[1].innerHTML)
   }
 }
 
@@ -34,7 +46,7 @@ bindNbuild = function(){
   $(".item").on('click', myHelper)
   $("#grocery_list").droppable({ 
         drop: function(event, ui) { 
-            controller.updateList(ui, this);
+            controller.update(ui);
         }});
 }
 

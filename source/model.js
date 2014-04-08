@@ -3,18 +3,19 @@ SingleListApp = {}
 SingleListApp.Controller = function(){
 }
 
-List = function(){
-  this.items = [];
-  this.total = 0;
+SingleListApp.List = function(){
+  this.items = []
+  this.total = 0
 }
 
-List.prototype = {
-  updateTotal: function(value){
-    this.total += value
+SingleListApp.List.prototype = {
+  updateTotal: function(item){
+    this.total += item.value
+    this.items.push(item)
   }
 }
 
-Item = function(input){
+SingleListApp.Item = function(input){
   this.name = input.name;
   this.value = input.value;
 }
