@@ -17,23 +17,24 @@ $(document).ready(function(){
   controller.bind();
 })
 
-SingleListApp = {}
-
-SingleListApp.Controller = function(){
-
-}
 
 SingleListApp.Controller.prototype = {
-  bind: function(){bindNbuild()}
+  bind: function(){bindNbuild()},
+  updateList: function(droppedItem, droppingSpot){ 
+    var v = droppedItem.draggable[0].cloneNode(true);
+    List.update(v)
+    parseFloat(v.children[1].innerHTML)
+    $(droppingSpot).append($(v));
+  }
 }
+
 
 bindNbuild = function(){
   $(".item").draggable({helper: 'clone'});
   $(".item").on('click', myHelper)
   $("#grocery_list").droppable({ 
         drop: function(event, ui) { 
-            var v = ui.draggable[0].cloneNode(true);
-            $(this).append($(v));
+            controller.updateList(ui, this);
         }});
 }
 
